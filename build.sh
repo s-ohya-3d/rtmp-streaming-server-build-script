@@ -9,7 +9,7 @@
 base_dir=$(cd "$(dirname "$0")";pwd);
 
 #You can change the version of nginx/tengine/openresty version.
-nginxVer="1.8.0";
+nginxVer="1.14.0";
 tengineVer="2.1.1";
 openrstyVer="1.9.3.2";
 
@@ -32,7 +32,7 @@ function extractPkg(){
 }
 
 function buildType(){
-
+	types=%1
 	echo "1. Nginx-with-rtmp";
 	echo "2. Tengine-with-rtmp";
 	echo "3. Openresty-with-rtmp";
@@ -45,7 +45,9 @@ function buildType(){
 	echo "---------------------------------------------------------------------------------";
 	echo "---------------------------------------------------------------------------------";
 	echo "Please Select build type ( 1 2 3 ) >";
-	read types;
+	if [ "$types"="" ] ; then
+		read types;
+	fi
 	echo "You had entered: ( $types )"
 
 	if [[ "$types"="1" ]] || [[ "$types"=" " ]]; then
@@ -104,6 +106,6 @@ function buildProgram(){
 	make && make install;
 }
 
-buildType;
+buildType $1;
 
 
